@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Уроки сборки кубика Рубика от чемпионов мира, 3D модели и таймер">
+  <title>CubeWorld — кубик Рубика с чемпионами</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ======== ВЕРХНЕЕ МЕНЮ ======== -->
+  <header class="topbar">
+    <a href="#home" class="logo">🧩 CubeWorld</a>
+    <nav class="menu">
+      <a href="#viewer">3D</a>
+      <a href="#videos">Видео</a>
+      <a href="#champions">Чемпионы</a>
+      <a href="#puzzles">Головоломки</a>
+      <a href="#timer">Таймер</a>
+    </nav>
+  </header>
+
+  <!-- ======== ГЛАВНЫЙ ЭКРАН ======== -->
+  <section id="home" class="hero">
+    <div class="hero-text">
+      <h1>Собирай кубик <span>как чемпион</span></h1>
+      <p>
+        Уроки от лучших спидкуберов мира, 3D кубик, который можно крутить
+        пальцем, и таймер для тренировок. Всё в одном месте.
+      </p>
+      <div class="hero-buttons">
+        <a class="btn primary" href="#videos">Смотреть уроки</a>
+        <a class="btn" href="#viewer">Крутить 3D кубик</a>
+      </div>
+      <ul class="stats">
+        <li><strong>9</strong><span>видов головоломок</span></li>
+        <li><strong>5</strong><span>чемпионов</span></li>
+        <li><strong>3D</strong><span>модель кубика</span></li>
+      </ul>
+    </div>
+
+    <div class="hero-cube">
+      <div class="scene" id="hero-scene">
+        <div class="cube" id="hero-cube"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== 3D ЛАБОРАТОРИЯ ======== -->
+  <section id="viewer" class="section reveal">
+    <h2>🧊 3D лаборатория</h2>
+    <p class="sub">Тяни кубик пальцем, чтобы вращать. Нажимай на грани, чтобы делать повороты.</p>
+
+    <div class="viewer-layout">
+      <div class="viewer-stage">
+        <div class="scene big" id="lab-scene">
+          <div class="cube" id="lab-cube"></div>
+        </div>
+      </div>
+
+      <div class="viewer-panel">
+        <h3>Размер кубика</h3>
+        <div class="chips" id="size-chips">
+          <button class="chip" data-n="2">2×2</button>
+          <button class="chip active" data-n="3">3×3</button>
+          <button class="chip" data-n="4">4×4</button>
+          <button class="chip" data-n="5">5×5</button>
+        </div>
+
+        <h3>Повороты граней</h3>
+        <label class="check">
+          <input type="checkbox" id="prime">
+          Против часовой стрелки (’)
+        </label>
+        <div class="moves">
+          <button class="move" data-face="U">U</button>
+          <button class="move" data-face="D">D</button>
+          <button class="move" data-face="R">R</button>
+          <button class="move" data-face="L">L</button>
+          <button class="move" data-face="F">F</button>
+          <button class="move" data-face="B">B</button>
+        </div>
+
+        <h3>Действия</h3>
+        <div class="actions">
+          <button class="btn-sm primary" id="btn-scramble">🔀 Перемешать</button>
+          <button class="btn-sm" id="btn-solve">✨ Собрать</button>
+          <button class="btn-sm" id="btn-reset">↺ Сброс</button>
+          <button class="btn-sm" id="btn-auto">🔄 Автовращение: вкл</button>
+        </div>
+        <p class="log" id="move-log">Ходов: 0</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== ВИДЕО ======== -->
+  <section id="videos" class="section reveal">
+    <h2>🎬 Видеоуроки</h2>
+    <p class="sub">Выбери уровень или найди видео по названию, чемпиону или головоломке.</p>
+
+    <div class="toolbar">
+      <input type="search" id="search" placeholder="🔍 Поиск: Yiheng Wang, CFOP, 3×3...">
+      <div class="chips" id="level-chips">
+        <button class="chip active" data-level="all">Все</button>
+        <button class="chip" data-level="beginner">Новичкам</button>
+        <button class="chip" data-level="advanced">Продвинутым</button>
+      </div>
+    </div>
+
+    <div id="video-grid" class="grid"></div>
+  </section>
+
+  <!-- ======== ЧЕМПИОНЫ ======== -->
+  <section id="champions" class="section reveal">
+    <h2>🏆 Чемпионы</h2>
+    <p class="sub">Люди, у которых можно учиться.</p>
+    <div id="champion-grid" class="grid champions-grid"></div>
+  </section>
+
+  <!-- ======== ГОЛОВОЛОМКИ ======== -->
+  <section id="puzzles" class="section reveal">
+    <h2>🔺 Виды головоломок</h2>
+    <p class="sub">Нажми на кубик NxN, чтобы открыть его в 3D лаборатории.</p>
+    <div id="puzzle-grid" class="grid"></div>
+  </section>
+
+  <!-- ======== ТАЙМЕР ======== -->
+  <section id="timer" class="section reveal">
+    <h2>⏱ Таймер</h2>
+    <p class="sub">Нажми на экран или пробел, чтобы запустить и остановить.</p>
+
+    <div class="timer-box">
+      <p class="scramble" id="scramble-text"></p>
+      <div class="timer-pad" id="timer-pad">0.00</div>
+
+      <div class="timer-stats">
+        <div><span>Лучшее</span><strong id="stat-best">—</strong></div>
+        <div><span>Среднее из 5</span><strong id="stat-ao5">—</strong></div>
+        <div><span>Среднее</span><strong id="stat-avg">—</strong></div>
+        <div><span>Сборок</span><strong id="stat-count">0</strong></div>
+      </div>
+
+      <div class="actions center">
+        <button class="btn-sm" id="btn-new-scramble">🔀 Новый скрамбл</button>
+        <button class="btn-sm" id="btn-delete-last">⌫ Удалить последнее</button>
+        <button class="btn-sm" id="btn-clear-times">🗑 Очистить всё</button>
+      </div>
+
+      <ul class="times" id="times-list"></ul>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 CubeWorld · Сделано на iPad с любовью к кубикам 🧩</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
